@@ -1,37 +1,41 @@
 <template>
     <div id="app-component">
-       <div class="row">
-           <div class="col-md-12"> <h2>Current list binance</h2></div>
-           <div class="col-xs-6">
-               <h2 style="text-align: center;">Buy</h2>
-               <div>
-                   <div class="col-xs-6 text-left"><b>Size</b></div>
-                   <div class="col-xs-6 text-right"><b>Bid</b></div>
+       <div class="row" style="margin-top: 10px;">
+           <div class="container" style="background-color: rgb(22, 26, 30); color: white;">
+               <div class="col-md-12"></div>
+               <div class="col-xs-6">
+                   <h2 style="text-align: center;">Buy</h2>
+                   <hr>
+                   <div>
+                       <div class="col-xs-6 text-left"><b>Size</b></div>
+                       <div class="col-xs-6 text-right"><b>Bid</b></div>
+                   </div>
+                   <div v-for="(item, index) in dataBuy" :key="index">
+                       <div class="col-xs-6 text-left">{{item.size}}</div>
+                       <div class="col-xs-6 text-right" style="color: red;">{{item.price}}</div>
+                   </div>
+                   <div style="font-size: 18px" v-if="dataBuy.length">
+                       <div class="col-xs-6 text-left"><b>Total</b></div>
+                       <div class="col-xs-6 text-right"><b>{{totalBuy}}</b></div>
+                   </div>
                </div>
-               <div v-for="(item, index) in dataBuy" :key="index">
-                   <div class="col-xs-6 text-left">{{item.size}}</div>
-                   <div class="col-xs-6 text-right">{{item.price}}</div>
-               </div>
-               <div style="font-size: 18px" v-if="dataBuy.length">
-                   <div class="col-xs-6 text-left"><b>Total</b></div>
-                   <div class="col-xs-6 text-right"><b>{{totalBuy}}</b></div>
-               </div>
-           </div>
-           <div class="col-xs-6">
-               <h2 style="text-align: center;">Sell</h2>
-               <div>
-                   <div class="col-xs-6 text-left"><b>Ask</b></div>
-                   <div class="col-xs-6 text-right"><b>Size</b></div>
-               </div>
-               <div v-for="(item, index) in dataSell" :key="index">
-                   <div class="col-xs-6 text-left">{{item.price}}</div>
-                   <div class="col-xs-6 text-right">{{item.size}}</div>
-               </div>
-               <div style="font-size: 18px" v-if="dataSell.length">
-                   <div class="col-xs-6 text-left"><b>Total</b></div>
-                   <div class="col-xs-6 text-right"><b>{{totalSell}}</b></div>
-               </div>
+               <div class="col-xs-6">
+                   <h2 style="text-align: center;">Sell</h2>
+                   <hr>
+                   <div>
+                       <div class="col-xs-6 text-left"><b>Ask</b></div>
+                       <div class="col-xs-6 text-right"><b>Size</b></div>
+                   </div>
+                   <div v-for="(item, index) in dataSell" :key="index">
+                       <div class="col-xs-6 text-left" style="color: rgb(14, 203, 129);">{{item.price}}</div>
+                       <div class="col-xs-6 text-right">{{item.size}}</div>
+                   </div>
+                   <div style="font-size: 18px" v-if="dataSell.length">
+                       <div class="col-xs-6 text-left"><b>Total</b></div>
+                       <div class="col-xs-6 text-right"><b>{{totalSell}}</b></div>
+                   </div>
 
+               </div>
            </div>
        </div>
     </div>
