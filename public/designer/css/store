@@ -1,0 +1,26 @@
+/*STORE*/
+
+.mainmenu li.numnav.cart {
+	border-left:1px solid #e1e1e1;
+}
+.mainmenu li.numnav.cart .num {
+	background: #faaf3a
+}
+.section-nav {
+	width: 100%;
+	margin-top: -30px;
+	margin-bottom: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #e1e1e1;
+	background: #ebebeb;
+}
+.store-pro-search > *:first-child {
+	width: 55%;
+}
+.store-pro-search > *:nth-child(2), .store-pro-search > *:nth-child(3) {
+	width: 20%;
+}
+.store-pro-search > *:nth-child(4) {
+	width: 5%;
+}

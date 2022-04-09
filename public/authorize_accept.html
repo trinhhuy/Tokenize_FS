@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo authorize by using accept.js</title>
+</head>
+<body>
+<script type="text/javascript" src="https://js.authorize.net/v1/Accept.js" charset="utf-8"></script>
+<form id="paymentForm"
+      method="POST"
+      action="https://emr.wikiallergies.com/v1/" >
+  <label>Card Number (13-16 digits) <input type="text" name="cardNumber" id="cardNumber" placeholder="cardNumber" maxlength="16"/></label><br><br>
+  <labe>Expire Month (xx)<input type="text" name="expMonth" id="expMonth" placeholder="expMonth" maxlength="2"/> </labe><br><br>
+  <label>Expire Year (xx)<input type="text" name="expYear" id="expYear" placeholder="expYear" maxlength="2"/> </label><br><br>
+  <label>Security Code (3-4 digits)<input type="text" name="cardCode" id="cardCode" placeholder="cardCode" maxlength="4"/> </label><br><br>
+  <input type="hidden" name="dataValue" id="dataValue" />
+  <input type="hidden" name="dataDescriptor" id="dataDescriptor" />
+  <button type="button" onclick="sendPaymentDataToAnet()">Pay</button>
+</form>
+<script type="text/javascript">
+  function sendPaymentDataToAnet() {
+    let authData = {};
+    authData.clientKey = "7dzRd29e3HfHjzF924G3ntc4u2JUFrnUf7CDTYU3qvnzCLaMgKBsy9d2kK34U43m";
+    authData.apiLoginID = "9v3Y9xNwV";
+    let cardData = {};
+    cardData.cardNumber = document.getElementById("cardNumber").value;
+    cardData.month = document.getElementById("expMonth").value;
+    cardData.year = document.getElementById("expYear").value;
+    cardData.cardCode = document.getElementById("cardCode").value;
+    let secureData = {};
+    secureData.authData = authData;
+    secureData.cardData = cardData;
+    Accept.dispatchData(secureData, responseHandler);
+  }
+  function responseHandler(response) {
+    if (response.messages.resultCode === "Error") {
+      let i = 0;
+      while (i < response.messages.message.length) {
+        console.log(
+          response.messages.message[i].code + ": " +
+          response.messages.message[i].text
+        );
+        i = i + 1;
+      }
+    } else {
+      console.log(JSON.stringify(response))
+      console.log(JSON.stringify(response.opaqueData)) //send response.opaqueData to server
+      console.log(JSON.stringify(response.customerInformation))
+    }
+  }
+</script>
+</body>
+</html>
