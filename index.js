@@ -5,16 +5,8 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
-const whitelist = ['http://localhost', 'http://localhost:8080']
 const IndexService = require('./routes/util/IndexService')
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(null, new Error('Not allowed by CORS'))
-    }
-  },
   credentials: true,
   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, x-xsrf-token'
 }
@@ -38,7 +30,13 @@ app.use('/', (req, res) => {
 })
 
 server.listen(8888)
-var io = require('socket.io')(server)
+var io = require('socket.io')(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+
+})
 app.listen(Setting.IS_PRODUCTION ? Setting.PRODUCTION.PORT : Setting.LOCAL.PORT, function () {
   console.log(`Worker ${process.pid} listening on port ${Setting.IS_PRODUCTION ? Setting.PRODUCTION.PORT : Setting.LOCAL.PORT}`)
 })
@@ -49,9 +47,7 @@ io.sockets.on("connection", function(socket)
   setInterval(async () => {
     let data = await IndexService.getDataOrder()
     if (data) {
-      io.sockets.emit('get-data', JSON.stringify(data))
+      io.sockets.emit('trading-lists', data)
     }
-}, 30 * 1000);
+  }, 30 * 1000);
 });
-
-

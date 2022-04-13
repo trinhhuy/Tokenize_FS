@@ -94,7 +94,7 @@ export default {
      });
        socket.on("get-data", (data) => {
          if (data) {
-           this.convertData(JSON.parse(data))
+           this.convertData(data)
          }
      });
     },
